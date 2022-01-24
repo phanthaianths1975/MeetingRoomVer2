@@ -1,0 +1,209 @@
+﻿@{
+    ViewData["Title"] = "MeetingRoom";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+@model IEnumerable<Emergency.Areas.MeetingRoom.Models.Appointment>
+@using Emergency.Areas.MeetingRoom.Models
+@using Emergency.Areas.MeetingRoom.Controllers
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+button:hover {
+  opacity: 0.8;
+}
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+.container {
+  padding: 16px;
+}
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; 
+  border: 1px solid #888;
+  width: 80%; 
+}
+.modal-content1 {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; 
+  border: 1px solid #888;
+  width: 60%; 
+  border-radius:5px;
+  position:relative;
+}
+.modal-content2 {
+  background-color:green;
+  border: 1px solid #888;
+  width: 100px; 
+  border-radius:5px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50px%,-50%)
+}
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+@@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+  <h4 style="text-align:center;margin-top:30px"><b>TẠO CUỘC HỌP</b></h4>
+  <label for="country" style="margin-right:10px">Loại cuộc họp</label>
+    <select id="country" name="country" style="width:200px;padding:2px;margin-top:10px;margin-bottom:10px">
+      <option value="">Tất cả</option>
+      <option value="">Gía trị 1</option>
+      <option value="">Gía trị 2</option>
+    </select>
+    <br />
+    <div style="margin-bottom:10px">
+        <a style="text-decoration:none" href="#" onclick="meetingcreate()" ><span class="glyphicon glyphicon-plus-sign"></span> Tạo cuộc họp mới</a>
+    </div>
+<div id="id01" class="modal" style="z-index:99999" >
+  @Html.Partial("_AddRoom")
+</div>
+<div id="id02" class="modal" style="z-index:99999">
+  @Html.Partial("_EditRoom")
+</div>
+    
+@using DevExtreme.AspNet.Mvc
+    @(Html.DevExtreme().Scheduler().ID("scheduler")
+    .Height(600)
+    .DataSource(Model)
+    .TimeZone("VietNam")
+    .TextExpr("Text")
+    .StartDateExpr("StartDate")
+    .EndDateExpr("EndDate")
+    .RecurrenceRuleExpr("RecurrenceRule")
+    .ShowAllDayPanel(false).OnAppointmentUpdated(@<text>
+    function(e) {
+            }
+</text>).OnAppointmentUpdating(@<text>
+            function(e) {
+            }
+</text>).OnAppointmentAdded(@<text>
+            function(e) {
+            }
+</text>).OnAppointmentDblClick(@<text>
+            function(e) {
+       
+            }
+</text>).OnAppointmentClick(@<text>
+            function(e) {
+          $('#id02').modal('show');
+          document.getElementById("startTime").value = e.appointmentData.AppointmentId;
+           this._appointments.option(s, this._createActionByOption(s));
+            }
+</text>)
+     .Scrolling(config => { config.Mode(SchedulerScrollingMode.Virtual); })
+    .Views(views => {
+           views.Add()
+            .Type(SchedulerViewType.Day)
+            .StartDayHour(6)
+            .EndDayHour(24)
+            .Groups(new[] { "PriorityId" })
+            .DateCellTemplate(@<text>
+                @(await Html.PartialAsync("_DateCellTemplate"))
+            </text>);
+    })
+    .CurrentView(SchedulerViewType.Day)
+    .CurrentDate(DateTime.Now)
+    .StartDayHour(6)
+    .EndDayHour(24)
+    .Scrolling(config => { config.Mode(SchedulerScrollingMode.Virtual); })
+    .Editing(e => e.AllowAdding(new SchedulerController().AllowAdd()).AllowDeleting(MeetingRoom.AllowDelete()).AllowDragging(true).AllowUpdating(MeetingRoom.AllowUpdate()))
+   .Resources(res => {
+       res.Add()
+           .FieldExpr("PriorityId")
+           .AllowMultiple(false)
+           .Label("Meeting Room")
+           .DataSource(MeetingRoom.RoomList());
+   }))
+      <script>
+          function meetingcreate()
+          {
+              document.getElementById('id01').style.display='block';
+              document.getElementById('id03').style.display='none';
+              document.getElementById('id04').style.display='none';
+              document.getElementById('id05').style.display='none'
+          }
+      </script>

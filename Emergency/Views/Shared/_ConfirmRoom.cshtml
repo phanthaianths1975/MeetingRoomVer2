@@ -1,0 +1,19 @@
+﻿
+ <div id="id03" style="display:none;z-index:999999;background-color:lightgreen; background-color:green;
+  border: 1px solid #888;
+  width: 400px; 
+  border-radius:15px;
+  position:absolute;
+  top:50%;
+  left:50%;color:white;
+  transform:translate(-200px,-50%)" >
+<form  asp-area="MeetingRoom" asp-controller="Scheduler" asp-action="MeetingRoom"  method="post">
+     <input type="hidden" name="startTime" id="startTime" value="">
+     <input type="hidden" name="endTime" id="endTime" value="">
+
+     <h4 style="text-align:center;margin-top:20px;margin-bottom:10px"> Thông báo</h4>
+      <hr />
+      @Html.Partial("_ContentConfirmRoom");
+      @Html.Partial("_ContentConfirmAlert");
+      </form>
+</div>   

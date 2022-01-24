@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+<div  class="modal-content animate" >
+      <h3 style="text-align:center;margin-top:20px;margin-bottom:20px"> TẠO CUỘC HỌP</h3>
+       <div class="row" style=" padding-left:60px;padding-right:60px">
+       <label style="margin-bottom:0px">Chủ đề cuộc họp</label>
+       <div class="col-md-12" style="padding-right:0px;padding-left:0px">
+           <input type="Text" class="form-control" style="width:100%"/>
+       </div>
+       </div>
+        <div class="row" style=" padding-left:60px;padding-right:60px">
+      <div class="col-md-5" style="padding-right:0px;padding-left:0px">
+        <label style="">Thời gian bắt đầu*</label>
+      <input type="datetime-local" class="form-control" id="StartTime" name="StartTime">
+       </div>
+       <div class="col-md-2" style="">
+       </div>
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px ">
+      <label style="">Thời gian kết thúc*</label>
+            <input type="datetime-local" class="form-control" id="EndTime" name="EndTime" style="width:100%">
+       </div>
+      </div><div class="row" style="padding-left:60px;padding-right:60px">
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px">
+        <label style="margin-bottom:0px;margin-top:5px">Người chủ trì</label>
+        <input type="Text" class="form-control" style="width:100%"/>
+       </div>
+       <div class="col-md-2" style="">
+       </div>
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px ">
+      <label style="margin-bottom:0px;margin-top:5px">Người đặt lịch</label>
+       <input type="Text" class="form-control" style="width:100%"/>
+       </div>
+      </div>
+
+      <div class="row" style="padding-left:60px;padding-right:60px">
+      <label style="margin-bottom:0px">Nội dung cuộc họp</label>
+ <div class="col-md-12" style="padding-left:0px;padding-right:0px">
+      <input type="Text" class="form-control" style="width:100%"/>
+   </div>
+   </div> 
+   <div class="row" style="padding-left:60px;padding-right:60px">
+    <label style="margin-bottom:0px">Yêu cầu thêm</label>
+    <div class="col-md-12" style="padding-left:0px;padding-right:0px">
+   <input type="Text" class="form-control" style="width:100%"/>
+   </div>
+   </div> 
+
+   <div class="row" style="padding-left:60px;padding-right:60px">
+    <label style="margin-bottom:0px">Email người tham gia</label>
+    <div class="col-md-12" style="padding-left:0px;padding-right:0px">
+   <input type="Text" class="form-control" style="width:100%"/>
+   </div>
+   </div> 
+
+    <div class="row" style="padding-left:60px;padding-right:60px">
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px">
+        <label style="margin-bottom:0px">Phòng họp</label>
+        <input type="Text" class="form-control" style="width:100%"/>
+       </div>
+       <div class="col-md-2" style="">
+       </div>
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px ">
+      <label style="margin-bottom:0px">Phòng chính</label>
+       <input type="Text" class="form-control" style="width:100%"/>
+       </div>
+      </div><div class="row" style="padding-left:60px;padding-right:60px">
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px">
+        <label style="">Nhân viên hỗ trợ</label>
+        <select id="country" name="country" style="width:100%;" class="form-control">
+      <option value="australia">Tất cả</option>
+      <option value="canada">Nhân viên 1</option>
+      <option value="canada">Nhân viên 2</option>
+      <option value="canada">Nhân viên 3</option>
+
+    </select>
+       </div>
+       <div class="col-md-2" style="">
+       </div>
+       <div class="col-md-5" style="padding-right:0px;padding-left:0px ">
+      <label style="">Thiết bị</label>
+        <select id="country" name="country" style="width:100%" class="form-control">
+      <option value="australia">Tất cả</option>
+      <option value="canada">Máy chiếu</option>
+      <option value="usa">Bảng trắng</option>
+    </select>
+       </div>
+      </div>
+       <div class="row" style=" padding-left:60px;padding-right:60px;margin-bottom:10px;margin-top:10px">
+      <div class="col-md-10" style="padding-right:0px;padding-left:0px">
+        
+       </div>
+       <div class="col-md-1" style="padding-right:5px;padding-left:5px">
+           <button type="button" class="btn btn-danger" style=" border-radius: 10px;width:100%;margin-left:0px;margin-right:0px" onclick="document.getElementById('id01').style.display='none'; document.getElementById('id04').style.display='none'">Hủy</button>
+       </div>
+       <div class="col-md-1" style="padding-right:5px;padding-left:5px">
+           <button type="button" class="btn btn-outline-info" style=" border-radius: 10px;width:100%;background-color:green;color:white" onclick="Save()">Lưu</button>
+       </div>
+      </div>
+    @Html.Partial("_ConfirmRoom")
+</div>
+ <script>
+     function Save()
+     {
+     if(document.getElementById('StartTime').value != "" || document.getElementById('EndTime').value != "")
+     {
+     document.getElementById('id03').style.display='block';
+     document.getElementById('id04').style.display='block';
+     document.getElementById('id05').style.display='none';
+
+     document.getElementById('startTime').value = document.getElementById('StartTime').value;
+     document.getElementById('endTime').value = document.getElementById('EndTime').value
+     }
+     else
+     {
+     document.getElementById('id03').style.display='block';
+     document.getElementById('id04').style.display='none';
+     document.getElementById('id05').style.display='block';
+     }
+     }
+ </script>
